@@ -1,11 +1,13 @@
 package com.example.geoquiz;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Gravity;
@@ -64,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CheatActivity.class);
                 startActivityForResult(intent,REQUEST_CODE_CHEAT);
+
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                    ActivityOptions options = ActivityOptions.makeClipRevealAnimation(
+                            v, 0,0,v.getWidth(), v.getHeight());
+                    startActivityForResult(intent, REQUEST_CODE_CHEAT, options.toBundle());
+                }
             }
 
         });
